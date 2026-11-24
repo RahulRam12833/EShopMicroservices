@@ -1,11 +1,11 @@
 ﻿namespace Catalog.API.Products.CreateProduct
 {
     public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price)
-        :ICommand<CreateProductResult>;
-    public record CreateProductResult(Guid id);
-    internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
+        :ICommand<UpdateProductResult>;
+    public record UpdateProductResult(Guid id);
+    internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, UpdateProductResult>
     {
-        public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
+        public async Task<UpdateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
             //Business logic to create a product
             //create Product entity from command object
@@ -25,7 +25,7 @@
             await session.SaveChangesAsync(cancellationToken);
 
             //return result
-            return new CreateProductResult(Guid.NewGuid());
+            return new UpdateProductResult(Guid.NewGuid());
         }
     }
 }
